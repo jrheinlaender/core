@@ -73,4 +73,6 @@ class SfxUInt16Item;
 #define SID_SMEDITWINDOWZOOM        TypedWhichId<SfxUInt16Item>(SID_SMA_START + 129)
 #define SID_DEFAULT_SM_SYNTAX_VERSION TypedWhichId<SfxUInt16Item>(SID_SMA_START + 130)
 
+#define SID_ITEXT                   (SID_SMA_START + 200)
+
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
