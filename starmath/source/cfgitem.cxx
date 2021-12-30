@@ -32,6 +32,8 @@
 
 #include <com/sun/star/beans/PropertyValue.hpp>
 
+#include <officecfg/Office/Math.hxx>
+#include <officecfg/Office/iMath.hxx>
 #include <cfgitem.hxx>
 
 #include <starmath.hrc>
@@ -139,6 +141,7 @@ struct SmCfgOther
     sal_uInt16      nPrintZoomFactor;
     sal_uInt16      nSmEditWindowZoomFactor;
     sal_uInt16      nSmSyntaxVersion;
+    sal_uInt32      nImSyntaxVersion;
     bool            bPrintTitle;
     bool            bPrintFormulaText;
     bool            bPrintFrame;
@@ -153,6 +156,7 @@ struct SmCfgOther
 };
 
 constexpr sal_uInt16 nDefaultSmSyntaxVersion(5);
+constexpr sal_uInt32 nDefaultImSyntaxVersion(20301); // corresponds with iMath extension version 2.3.1 (note that leading 0 would imply an octal number)
 
 SmCfgOther::SmCfgOther()
     : ePrintSize(PRINT_SIZE_NORMAL)
@@ -160,6 +164,7 @@ SmCfgOther::SmCfgOther()
     , nSmEditWindowZoomFactor(100)
     // Defaulted as 5 so I have time to code the parser 6
     , nSmSyntaxVersion(nDefaultSmSyntaxVersion)
+    , nImSyntaxVersion(nDefaultImSyntaxVersion)
     , bPrintTitle(true)
     , bPrintFormulaText(true)
     , bPrintFrame(true)
@@ -793,6 +798,10 @@ void SmMathConfig::LoadOther()
     if (sal_Int16 nTmp; pVal->hasValue() && (*pVal >>= nTmp))
         pOther->nSmSyntaxVersion = nTmp;
     ++pVal;
+    // Misc/DefaultImSyntaxVersion
+    if (sal_Int16 nTmp; pVal->hasValue() && (*pVal >>= nTmp))
+        pOther->nImSyntaxVersion = nTmp;
+    ++pVal;
     // Misc/IgnoreSpacesRight
     if (bool bTmp; pVal->hasValue() && (*pVal >>= bTmp))
         pOther->bIgnoreSpacesRight = bTmp;
@@ -856,6 +865,8 @@ void SmMathConfig::SaveOther()
     *pVal++ <<= pOther->bIsAutoCloseBrackets;
     // Misc/DefaultSmSyntaxVersion
     *pVal++ <<= pOther->nSmSyntaxVersion;
+    // Misc/DefaultImSyntaxVersion
+    *pVal++ <<= pOther->nImSyntaxVersion;
     // Misc/IgnoreSpacesRight
     *pVal++ <<= pOther->bIgnoreSpacesRight;
     // Misc/SmEditWindowZoomFactor
@@ -1250,6 +1261,15 @@ sal_uInt16 SmMathConfig::GetDefaultSmSyntaxVersion() const
     return pOther->nSmSyntaxVersion;
 }
 
+sal_uInt32 SmMathConfig::GetDefaultImSyntaxVersion() const
+{
+    if (utl::ConfigManager::IsFuzzing())
+        return nDefaultImSyntaxVersion;
+    if (!pOther)
+        const_cast<SmMathConfig*>(this)->LoadOther();
+    return pOther->nImSyntaxVersion;
+}
+
 bool SmMathConfig::IsPrintFrame() const
 {
     if (!pOther)
@@ -1289,6 +1309,17 @@ void SmMathConfig::SetDefaultSmSyntaxVersion( sal_uInt16 nVal )
     {
         CommitLocker aLock(*this);
         pOther->nSmSyntaxVersion = nVal;
+        SetOtherModified( true );
+    }
+}
+
+void SmMathConfig::SetDefaultImSyntaxVersion( sal_uInt32 nVal )
+{
+    if (!pOther)
+        LoadOther();
+    if (nVal != pOther->nImSyntaxVersion)
+    {
+        pOther->nImSyntaxVersion = nVal;
         SetOtherModified( true );
     }
 }
