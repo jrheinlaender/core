@@ -78,12 +78,14 @@ class SM_DLLPUBLIC SmDocShell : public SfxObjectShell, public SfxListener
     friend class SmCursor;
 
     OUString            maText;
+    OUString            maImText;
     SmFormat            maFormat;
     OUString            maAccText;
     SvtLinguOptions     maLinguOptions;
     std::unique_ptr<SmTableNode> mpTree;
     rtl::Reference<SfxItemPool> mpEditEngineItemPool;
     std::unique_ptr<SmEditEngine> mpEditEngine;
+    std::unique_ptr<SmEditEngine> mpImEditEngine;
     VclPtr<SfxPrinter>  mpPrinter;       //q.v. comment to SmPrinter Access!
     VclPtr<Printer>     mpTmpPrinter;    //ditto
     sal_uInt16          mnModifyCount;
@@ -162,8 +164,11 @@ public:
     void        ReplaceBadChars();
 
     void        UpdateText();
+    void        UpdateImText();
     void        SetText(const OUString& rBuffer);
     const OUString&  GetText() const { return maText; }
+    void        SetImText(const OUString& rBuffer, const bool doCompile = true);
+    const OUString&  GetImText() const { return maImText; }
     void        SetFormat(SmFormat const & rFormat);
     const SmFormat&  GetFormat() const { return maFormat; }
 
@@ -179,6 +184,7 @@ public:
     OUString const & GetAccessibleText();
 
     EditEngine &    GetEditEngine();
+    EditEngine &    GetImEditEngine();
 
     void        DrawFormula(OutputDevice &rDev, Point &rPosition, bool bDrawSelection = false);
     Size        GetSize();
