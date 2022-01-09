@@ -139,6 +139,8 @@ $(eval $(call gb_Library_add_exception_objects,sm,\
         starmath/source/imath/extintegral \
         starmath/source/imath/extsymbol \
         starmath/source/imath/func \
+        starmath/source/imath/iFormulaLine \
+        starmath/source/imath/iIterator \
         starmath/source/imath/imathutils \
         starmath/source/imath/msgdriver \
         starmath/source/imath/operands \
@@ -149,8 +151,6 @@ $(eval $(call gb_Library_add_exception_objects,sm,\
         starmath/source/imath/unit \
         starmath/source/imath/unitmgr \
         starmath/source/imath/utils \
-        starmath/source/imath/iFormulaLine \
-        starmath/source/imath/iIterator \
 ))
 	
 
