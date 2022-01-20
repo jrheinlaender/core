@@ -2,3 +2,4 @@ This file exists only because launchpad refuses to upload new builds where only 
 Since the source tarfile is dated after the latest commit there is a file name clash
 Commit: 2022-01-18
 Commit: 2022-01-19 Enable automatic fetching of external tarballs
+Commit: 2022-01-20 Add curl to build dependencies
