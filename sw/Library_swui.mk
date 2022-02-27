@@ -32,6 +32,8 @@ $(eval $(call gb_Library_set_precompiled_header,swui,sw/inc/pch/precompiled_swui
 $(eval $(call gb_Library_use_externals,swui,\
 	boost_headers \
 	icu_headers \
+        cln \
+        ginac \
 ))
 
 $(eval $(call gb_Library_use_custom_headers,swui,\
@@ -59,6 +61,7 @@ $(eval $(call gb_Library_use_libraries,swui,\
     editeng \
     i18nlangtag \
     i18nutil \
+    imath \
     msfilter \
     sal \
     salhelper \

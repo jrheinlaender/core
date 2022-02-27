@@ -384,6 +384,9 @@ SwDoc::SwDoc()
         SetLanguage(eLang, RES_CHRATR_CTL_LANGUAGE);
     }
 
+    // This will initialize options and compiler on the empty document
+    Compile();
+
     getIDocumentState().ResetModified();
 }
 
