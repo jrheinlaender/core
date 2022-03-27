@@ -160,7 +160,6 @@ enum SmModelPropertyHandles
     HANDLE_FORMULA,
     HANDLE_IFORMULA,
     HANDLE_PREVIOUSIFORMULA,
-    HANDLE_PARENTDOCUMENT,
     HANDLE_FONT_NAME_VARIABLES,
     HANDLE_FONT_NAME_FUNCTIONS,
     HANDLE_FONT_NAME_NUMBERS,
@@ -264,7 +263,6 @@ static rtl::Reference<PropertySetInfo> lcl_createModelPropertyInfo ()
         { OUString("Formula")                          , HANDLE_FORMULA                            ,  ::cppu::UnoType<OUString>::get(),                                      PROPERTY_NONE,  0                     },
         { OUString("iFormula")                         , HANDLE_IFORMULA                           ,  ::cppu::UnoType<OUString>::get(),                                      PROPERTY_NONE,  0                     },
         { OUString("PreviousIFormula")                 , HANDLE_PREVIOUSIFORMULA                   ,  ::cppu::UnoType<OUString>::get(),                                      PROPERTY_NONE,  0                     },
-        { OUString("ParentDocument")                   , HANDLE_PARENTDOCUMENT                     ,  ::cppu::UnoType<Any>::get(),                                           PROPERTY_NONE,  0                     },
         { OUString("IsScaleAllBrackets")               , HANDLE_IS_SCALE_ALL_BRACKETS              ,  cppu::UnoType<bool>::get(),                                                 PROPERTY_NONE,  0                     },
         { OUString("IsTextMode")                       , HANDLE_IS_TEXT_MODE                       ,  cppu::UnoType<bool>::get(),                                                 PROPERTY_NONE,  0                     },
         { OUString("GreekCharStyle")                   , HANDLE_GREEK_CHAR_STYLE                   ,  ::cppu::UnoType<sal_Int16>::get(),                                     PROPERTY_NONE,  0                     },
@@ -439,14 +437,8 @@ void SmModel::_setPropertyValues(const PropertyMapEntry** ppEntries, const Any* 
             {
                 OUString aName;
                 *pValues >>= aName;
+                SAL_INFO("starmath.imath", "Setting previous formula name to " << aName);
                 pDocSh->SetPreviousFormula(aName);
-            }
-            break;
-            case HANDLE_PARENTDOCUMENT:
-            {
-                Reference< XModel > xModel;
-                *pValues >>= xModel;
-                pDocSh->SetParentModel(xModel);
             }
             break;
             case HANDLE_FONT_NAME_VARIABLES                :
@@ -725,9 +717,6 @@ void SmModel::_getPropertyValues( const PropertyMapEntry **ppEntries, Any *pValu
             break;
             case HANDLE_PREVIOUSIFORMULA:
                 *pValue <<= pDocSh->GetPreviousFormula();
-            break;
-            case HANDLE_PARENTDOCUMENT:
-                *pValue <<= pDocSh->GetParentModel();
             break;
             case HANDLE_FONT_NAME_VARIABLES                :
             case HANDLE_FONT_NAME_FUNCTIONS                :
