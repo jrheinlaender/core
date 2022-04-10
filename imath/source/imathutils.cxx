@@ -1904,10 +1904,10 @@ void orderXText(const Reference<XText>& xText, std::list< OUString >& formulas, 
            Any tc = xContentEnum->nextElement();
            Reference< XComponent > comp;
            tc >>= comp;
-           //MSG_INFO(3,  "Name: " << STR(getObjectName(xTC)) << endline);
+           //MSG_INFO(3,  "Name: " << STR(getObjectName(comp)) << endline);
 
            if (checkIsiFormula(comp)) {
-             //MSG_INFO(3,  "Found formula: " << STR(getObjectName(xTC)) << endline);
+             //MSG_INFO(3,  "Found formula: " << STR(getObjectName(comp)) << endline);
              formulas.emplace_back(getObjectName(comp));
            }
          }
