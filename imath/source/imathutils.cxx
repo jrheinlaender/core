@@ -1054,8 +1054,12 @@ sal_Bool checkIsiFormula(const Reference < XComponent >& xComponent) {
   if (checkIsFormula(xComponent)) { // we have a formula, is it an iFormula?
     Reference< XModel > fModel = extractModel(xComponent);
     OUString fText(getFormulaText(fModel));
+#ifdef INSIDE_SM
+    return fText.getLength() > 0;
+#else
     int iipos = fText.indexOfAsciiL("%%ii", 4);
     return (iipos >= 0);
+#endif
   } else {
     return false;
   }
@@ -1080,7 +1084,11 @@ OUString getFormulaText(const Reference < XModel >& fModel) {
 
   // get the formula text
   Any fTextAny;
+#ifdef INSIDE_SM
+  fTextAny = fPS->getPropertyValue(OU("iFormula"));
+#else
   fTextAny = fPS->getPropertyValue(OU("Formula"));
+#endif
   OUString fText;
   fTextAny >>= fText;
   return fText;
