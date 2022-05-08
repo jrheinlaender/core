@@ -319,6 +319,7 @@ SwDocShell::SwDocShell( SfxObjectCreateMode const eMode )
     , m_nUpdateDocMode(document::UpdateDocMode::ACCORDING_TO_CONFIG)
     , m_IsATemplate(false)
     , m_IsRemovedInvisibleContent(false)
+    , m_nextIFormulaNumber(0)
 {
     Init_Impl();
 }
@@ -333,6 +334,7 @@ SwDocShell::SwDocShell( const SfxModelFlags i_nSfxCreationFlags )
     , m_nUpdateDocMode(document::UpdateDocMode::ACCORDING_TO_CONFIG)
     , m_IsATemplate(false)
     , m_IsRemovedInvisibleContent(false)
+    , m_nextIFormulaNumber(0)
 {
     Init_Impl();
 }
@@ -348,6 +350,7 @@ SwDocShell::SwDocShell( SwDoc& rD, SfxObjectCreateMode const eMode )
     , m_nUpdateDocMode(document::UpdateDocMode::ACCORDING_TO_CONFIG)
     , m_IsATemplate(false)
     , m_IsRemovedInvisibleContent(false)
+    , m_nextIFormulaNumber(0)
 {
     Init_Impl();
 }
