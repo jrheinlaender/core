@@ -754,7 +754,7 @@ void SmMathConfig::LoadOther()
     pOther->bIsSaveOnlyUsedSymbols = officecfg::Office::Math::LoadSave::IsSaveOnlyUsedSymbols::get();
     pOther->bIsAutoCloseBrackets = officecfg::Office::Math::Misc::AutoCloseBrackets::get();
     pOther->nSmSyntaxVersion = officecfg::Office::Math::Misc::DefaultSmSyntaxVersion::get();
-    pOther->nImSyntaxVersion = officecfg::Office::Math::Misc::DefaultImSyntaxVersion::get();
+    pOther->nImSyntaxVersion = officecfg::Office::iMath::Miscellaneous::DefaultImSyntaxVersion::get();
     pOther->bIgnoreSpacesRight = officecfg::Office::Math::Misc::IgnoreSpacesRight::get();
     pOther->bToolboxVisible = officecfg::Office::Math::View::ToolboxVisible::get();
     pOther->bAutoRedraw = officecfg::Office::Math::View::AutoRedraw::get();
@@ -779,7 +779,7 @@ void SmMathConfig::SaveOther()
     officecfg::Office::Math::LoadSave::IsSaveOnlyUsedSymbols::set(pOther->bIsSaveOnlyUsedSymbols, batch);
     officecfg::Office::Math::Misc::AutoCloseBrackets::set(pOther->bIsAutoCloseBrackets, batch);
     officecfg::Office::Math::Misc::DefaultSmSyntaxVersion::set(pOther->nSmSyntaxVersion, batch);
-    officecfg::Office::Math::Misc::DefaultImSyntaxVersion::set(pOther->nImSyntaxVersion, batch);
+    officecfg::Office::iMath::Miscellaneous::DefaultImSyntaxVersion::set(pOther->nImSyntaxVersion, batch);
     officecfg::Office::Math::Misc::IgnoreSpacesRight::set(pOther->bIgnoreSpacesRight, batch);
     officecfg::Office::Math::View::ToolboxVisible::set(pOther->bToolboxVisible, batch);
     officecfg::Office::Math::View::AutoRedraw::set(pOther->bAutoRedraw, batch);
