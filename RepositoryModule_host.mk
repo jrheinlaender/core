@@ -68,6 +68,7 @@ $(eval $(call gb_Module_add_moduledirs,libreoffice,\
 	i18nutil \
 	idl \
 	$(call gb_Helper_optional,DESKTOP,idlc) \
+	imath \
 	instsetoo_native \
 	io \
 	javaunohelper \
