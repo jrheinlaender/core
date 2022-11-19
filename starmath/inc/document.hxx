@@ -113,6 +113,7 @@ class SM_DLLPUBLIC SmDocShell final : public SfxObjectShell, public SfxListener
     sal_uInt16          mnModifyCount;
     bool                mbFormulaArranged;
     sal_uInt16          mnSmSyntaxVersion;
+    sal_uInt32          mnImSyntaxVersion;
     std::unique_ptr<AbstractSmParser> maParser;
     std::unique_ptr<SmCursor> mpCursor;
     std::set< OUString >    maUsedSymbols;   // to export used symbols only when saving
@@ -199,7 +200,9 @@ public:
     const SmTableNode *GetFormulaTree() const  { return mpTree.get(); }
     void            SetFormulaTree(SmTableNode *pTree) { mpTree.reset(pTree); }
     sal_uInt16      GetSmSyntaxVersion() const { return mnSmSyntaxVersion; }
+    sal_uInt32      GetImSyntaxVersion() const { return mnImSyntaxVersion; }
     void            SetSmSyntaxVersion(sal_uInt16 nSmSyntaxVersion);
+    void            SetImSyntaxVersion(sal_uInt32 nImSyntaxVersion);
 
     void            Compile(); // run iCompiler on the maImText
 
