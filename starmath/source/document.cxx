@@ -156,6 +156,11 @@ void SmDocShell::SetSmSyntaxVersion(sal_uInt16 nSmSyntaxVersion)
     }
 }
 
+void SmDocShell::SetImSyntaxVersion(sal_uInt32 nImSyntaxVersion)
+{
+    mnImSyntaxVersion = nImSyntaxVersion;
+}
+
 SFX_IMPL_OBJECTFACTORY(SmDocShell, SvGlobalName(SO3_SM_CLASSID), "smath" )
 
 void SmDocShell::Notify(SfxBroadcaster&, const SfxHint& rHint)
@@ -1133,6 +1138,7 @@ SmDocShell::SmDocShell( SfxModelFlags i_nSfxCreationFlags )
     , mnModifyCount(0)
     , mbFormulaArranged(false)
     , mnSmSyntaxVersion(SM_MOD()->GetConfig()->GetDefaultSmSyntaxVersion())
+    , mnImSyntaxVersion(SM_MOD()->GetConfig()->GetDefaultImSyntaxVersion())
     , mPreviousFormula("")
     , mIFormulaDependencyIn("")
     , mIFormulaDependencyOut("")
@@ -1142,7 +1148,7 @@ SmDocShell::SmDocShell( SfxModelFlags i_nSfxCreationFlags )
     , mpCurrentCompiler(nullptr)
 {
     ImStaticInitialization();
-    MSG_INFO(0, "SmDocShell::SmDocShell with iMath version=" << SM_MOD()->GetConfig()->GetDefaultImSyntaxVersion());
+    MSG_INFO(0, "SmDocShell::SmDocShell with iMath version=" << mnImSyntaxVersion);
 
     SvtLinguConfig().GetOptions(maLinguOptions);
 
@@ -1156,6 +1162,7 @@ SmDocShell::SmDocShell( SfxModelFlags i_nSfxCreationFlags )
 
     SetBaseModel(new SmModel(this));
     SetSmSyntaxVersion(mnSmSyntaxVersion);
+    SetImSyntaxVersion(mnImSyntaxVersion);
 }
 
 SmDocShell::~SmDocShell()
