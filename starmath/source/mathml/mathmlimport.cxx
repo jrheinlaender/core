@@ -76,6 +76,8 @@ one go*/
 
 #include <smim.hrc>
 
+#include <logging.hxx>
+
 using namespace ::com::sun::star::beans;
 using namespace ::com::sun::star::container;
 using namespace ::com::sun::star::document;
@@ -482,7 +484,7 @@ void SmXMLImport::endDocument()
 
             if (mnImSyntaxVersion < 20301 && aText.getLength() > 4 && aImText == "") {
                 // Legacy document created with iMath extension
-                SAL_INFO("starmath.imath", "Migrating legacy iMath extension document\n" << aText);
+                SAL_INFO_LEVEL(2, "starmath.imath", "Migrating legacy iMath extension document\n" << aText);
                 sal_Int32 lineIdx = 0;
 
                 do
@@ -499,10 +501,10 @@ void SmXMLImport::endDocument()
                 } while (lineIdx >= 0);
 
                 mnImSyntaxVersion = programVersion;
-                SAL_INFO("starmath.imath", "Result\n'" << aImText << "'");
+                SAL_INFO_LEVEL(2, "starmath.imath", "Result\n'" << aImText << "'");
             } else if (mnImSyntaxVersion < programVersion) {
                 // Document has older version than program
-                SAL_INFO("starmath.imath", "Migrating document from version " << mnImSyntaxVersion << " to version " <<  programVersion);
+                SAL_INFO_LEVEL(2, "starmath.imath", "Migrating document from version " << mnImSyntaxVersion << " to version " <<  programVersion);
                 //TODO: updateFromTo(mnImSyntaxVersion, programVersion);
 
                 mnImSyntaxVersion = programVersion;
@@ -1280,13 +1282,13 @@ void SmXMLAnnotationContext_Impl::characters(const OUString& rChars)
     }
     if (mnIMathVersion)
     {
-        SAL_INFO("starmath.imath", "Opening file with iMath version " << mnIMathVersion);
+        SAL_INFO_LEVEL(2, "starmath.imath", "Opening document with iMath version " << mnIMathVersion);
         GetSmImport().SetImText(GetSmImport().GetImText() + rChars);
         GetSmImport().SetImSyntaxVersion(mnIMathVersion);
     }
     else
     {
-        SAL_INFO("starmath.imath", "Opening legacy file without iMath version");
+        SAL_INFO_LEVEL(2, "starmath.imath", "Opening legacy file without iMath version");
         GetSmImport().SetImSyntaxVersion(0); // This will trigger migration in endDocument()
     }
 }
