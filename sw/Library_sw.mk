@@ -98,8 +98,6 @@ $(eval $(call gb_Library_use_externals,sw,\
 	icuuc \
 	icu_headers \
 	libxml2 \
-	cln \
-	ginac \
 ))
 
 $(eval $(call gb_Library_add_exception_objects,sw,\
