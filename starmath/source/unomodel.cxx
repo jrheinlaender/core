@@ -231,7 +231,12 @@ enum SmModelPropertyHandles
     HANDLE_BASELINE,
     HANDLE_INTEROP_GRAB_BAG,
     HANDLE_STARMATH_VERSION,
-    HANDLE_IMATH_VERSION
+    HANDLE_IMATH_VERSION,
+    HANDLE_IMATH_TYPEFIRSTLINE,
+    HANDLE_IMATH_TYPELASTLINE,
+    HANDLE_IMATH_ISHIDDEN,
+    HANDLE_IMATH_EXPRFIRSTLHS,
+    HANDLE_IMATH_EXPRLASTLHS
 };
 
 }
@@ -314,8 +319,14 @@ static rtl::Reference<PropertySetInfo> lcl_createModelPropertyInfo ()
         // #i972#
         { OUString("BaseLine")                         , HANDLE_BASELINE                           ,  ::cppu::UnoType<sal_Int16>::get(),                                     PROPERTY_NONE,  0                     },
         { OUString("InteropGrabBag")                   , HANDLE_INTEROP_GRAB_BAG                   ,  cppu::UnoType<uno::Sequence< beans::PropertyValue >>::get(),           PROPERTY_NONE,  0                     },
-        { OUString("SyntaxVersion")                    , HANDLE_STARMATH_VERSION                   ,  ::cppu::UnoType<sal_Int16>::get(),                             PROPERTY_NONE,  0                     },
-        { OUString("ImSyntaxVersion")                  , HANDLE_IMATH_VERSION                      ,  ::cppu::UnoType<sal_Int32>::get(),                             PROPERTY_NONE,  0                     },
+        { OUString("SyntaxVersion")                    , HANDLE_STARMATH_VERSION                   ,  ::cppu::UnoType<sal_Int16>::get(),                                     PROPERTY_NONE,  0                     },
+        { OUString("ImSyntaxVersion")                  , HANDLE_IMATH_VERSION                      ,  ::cppu::UnoType<sal_Int32>::get(),                                     PROPERTY_NONE,  0                     },
+        // These are for internal iMath usage
+        { OUString("ImTypeFirstLine")                  , HANDLE_IMATH_TYPEFIRSTLINE                ,  ::cppu::UnoType<OUString>::get(),                                      PropertyAttribute::READONLY,  0       },
+        { OUString("ImTypeLastLine")                   , HANDLE_IMATH_TYPELASTLINE                 ,  ::cppu::UnoType<OUString>::get(),                                      PropertyAttribute::READONLY,  0       },
+        { OUString("ImIsHidden")                       , HANDLE_IMATH_ISHIDDEN                     ,  ::cppu::UnoType<bool>::get(),                                          PROPERTY_NONE,  0                     },
+        { OUString("ImExpressionFirstLhs")             , HANDLE_IMATH_EXPRFIRSTLHS                 ,  ::cppu::UnoType<OUString>::get(),                                      PropertyAttribute::READONLY,  0       },
+        { OUString("ImExpressionLastLhs")              , HANDLE_IMATH_EXPRLASTLHS                  ,  ::cppu::UnoType<OUString>::get(),                                      PropertyAttribute::READONLY,  0       },
         { OUString(), 0, css::uno::Type(), 0, 0 }
     };
     return rtl::Reference<PropertySetInfo>( new PropertySetInfo ( aModelPropertyInfoMap ) );
@@ -721,6 +732,9 @@ void SmModel::_setPropertyValues(const PropertyMapEntry** ppEntries, const Any* 
             case HANDLE_IMATH_VERSION:
                 pDocSh->SetImSyntaxVersion(pValues->get<sal_uInt32>());
                 break;
+            case HANDLE_IMATH_ISHIDDEN:
+                pDocSh->SetImHidden(pValues->get<bool>());
+                break;
         }
     }
 
@@ -959,6 +973,21 @@ void SmModel::_getPropertyValues( const PropertyMapEntry **ppEntries, Any *pValu
                 break;
             case HANDLE_IMATH_VERSION:
                 *pValue <<= pDocSh->GetImSyntaxVersion();
+                break;
+            case HANDLE_IMATH_TYPEFIRSTLINE:
+                *pValue <<= pDocSh->GetImTypeFirstLine();
+                break;
+            case HANDLE_IMATH_TYPELASTLINE:
+                *pValue <<= pDocSh->GetImTypeLastLine();
+                break;
+            case HANDLE_IMATH_ISHIDDEN:
+                *pValue <<= pDocSh->GetImHidden();
+                break;
+            case HANDLE_IMATH_EXPRFIRSTLHS:
+                *pValue <<= pDocSh->GetImExprFirstLhs();
+                break;
+            case HANDLE_IMATH_EXPRLASTLHS:
+                *pValue <<= pDocSh->GetImExprLastLhs();
                 break;
         }
     }
