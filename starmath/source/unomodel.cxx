@@ -161,7 +161,7 @@ enum SmModelPropertyHandles
 {
     HANDLE_FORMULA,
     HANDLE_IFORMULA,
-    HANDLE_IFORMULA_PENDING_COMPILE,
+    HANDLE_IFORMULA_PENDING_ACTION,
     HANDLE_PREVIOUSIFORMULA,
     HANDLE_IFORMULA_DEPENDENCY_IN,
     HANDLE_IFORMULA_DEPENDENCY_OUT,
@@ -274,7 +274,7 @@ static const rtl::Reference<PropertySetInfo> & lcl_createModelPropertyInfo ()
         { OUString("FontVariablesIsItalic")            , HANDLE_FONT_VARIABLES_POSTURE             ,  cppu::UnoType<bool>::get(),                                                 PROPERTY_NONE,  FNT_VARIABLE          },
         { OUString("Formula")                          , HANDLE_FORMULA                            ,  cppu::UnoType<OUString>::get(),                                             PROPERTY_NONE,  0                     },
         { OUString("iFormula")                         , HANDLE_IFORMULA                           ,  cppu::UnoType<OUString>::get(),                                             PROPERTY_NONE,  0                     },
-        { OUString("iFormulaPendingCompile")           , HANDLE_IFORMULA_PENDING_COMPILE           ,  cppu::UnoType<bool>::get(),                                                 PROPERTY_NONE,  0                     },
+        { OUString("iFormulaPendingAction")            , HANDLE_IFORMULA_PENDING_ACTION            ,  cppu::UnoType<OUString>::get(),                                             PROPERTY_NONE,  0                     },
         { OUString("PreviousIFormula")                 , HANDLE_PREVIOUSIFORMULA                   ,  cppu::UnoType<OUString>::get(),                                             PROPERTY_NONE,  0                     },
         { OUString("iFormulaDependencyIn")             , HANDLE_IFORMULA_DEPENDENCY_IN             ,  cppu::UnoType<OUString>::get(),                                             PROPERTY_NONE,  0                     },
         { OUString("iFormulaDependencyOut")            , HANDLE_IFORMULA_DEPENDENCY_OUT            ,  cppu::UnoType<OUString>::get(),                                             PROPERTY_NONE,  0                     },
@@ -448,11 +448,15 @@ void SmModel::_setPropertyValues(const PropertyMapEntry** ppEntries, const Any* 
                 pDocSh->SetImText(aText);
             }
             break;
-            case HANDLE_IFORMULA_PENDING_COMPILE:
+            case HANDLE_IFORMULA_PENDING_ACTION:
             {
-                bool bVal;
+                OUString bVal;
                 *pValues >>= bVal;
-                if (bVal) pDocSh->Compile();
+
+                if (bVal.equalsAscii("compile"))
+                     pDocSh->Compile();
+                else if (bVal.equalsAscii("delete"))
+                     pDocSh->PreventFormulaClose(false);
             }
             break;
             case HANDLE_PREVIOUSIFORMULA:
@@ -761,8 +765,8 @@ void SmModel::_getPropertyValues( const PropertyMapEntry **ppEntries, Any *pValu
             case HANDLE_IFORMULA:
                 *pValue <<= pDocSh->GetImText();
             break;
-            case HANDLE_IFORMULA_PENDING_COMPILE:
-                *pValue <<= false; // This is required because there is no PropertyAttribute::WRITEONLY
+            case HANDLE_IFORMULA_PENDING_ACTION:
+                *pValue <<= OUString(""); // This is required because there is no PropertyAttribute::WRITEONLY
             break;
             case HANDLE_PREVIOUSIFORMULA:
                 *pValue <<= pDocSh->GetPreviousFormula();
