@@ -236,7 +236,8 @@ enum SmModelPropertyHandles
     HANDLE_IMATH_TYPELASTLINE,
     HANDLE_IMATH_ISHIDDEN,
     HANDLE_IMATH_EXPRFIRSTLHS,
-    HANDLE_IMATH_EXPRLASTLHS
+    HANDLE_IMATH_EXPRLASTLHS,
+    HANDLE_IMATH_LABELS
 };
 
 }
@@ -327,6 +328,7 @@ static const rtl::Reference<PropertySetInfo> & lcl_createModelPropertyInfo ()
         { OUString("ImIsHidden")                       , HANDLE_IMATH_ISHIDDEN                     ,  ::cppu::UnoType<bool>::get(),                                          PROPERTY_NONE,  0                     },
         { OUString("ImExpressionFirstLhs")             , HANDLE_IMATH_EXPRFIRSTLHS                 ,  ::cppu::UnoType<OUString>::get(),                                      PropertyAttribute::READONLY,  0       },
         { OUString("ImExpressionLastLhs")              , HANDLE_IMATH_EXPRLASTLHS                  ,  ::cppu::UnoType<OUString>::get(),                                      PropertyAttribute::READONLY,  0       },
+        { OUString("ImLabels")                         , HANDLE_IMATH_LABELS                       ,  ::cppu::UnoType<const Sequence < OUString >>::get(),                   PropertyAttribute::READONLY,  0       },
     };
     static const rtl::Reference<PropertySetInfo> PROPS_INFO = new PropertySetInfo ( aModelPropertyInfoMap );
     return PROPS_INFO;
@@ -987,6 +989,9 @@ void SmModel::_getPropertyValues( const PropertyMapEntry **ppEntries, Any *pValu
                 break;
             case HANDLE_IMATH_EXPRLASTLHS:
                 *pValue <<= pDocSh->GetImExprLastLhs();
+                break;
+            case HANDLE_IMATH_LABELS:
+                *pValue <<= pDocSh->GetImLabels();
                 break;
         }
     }
