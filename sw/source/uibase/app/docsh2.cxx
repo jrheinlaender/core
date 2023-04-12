@@ -123,8 +123,6 @@
 
 #include <memory>
 
-#include <imath/imathutils.hxx>
-
 using namespace ::com::sun::star::ui::dialogs;
 using namespace ::com::sun::star::lang;
 using namespace ::com::sun::star::uno;
@@ -389,24 +387,6 @@ bool SwDocShell::PrepareClose( bool bUI )
             using namespace com::sun::star::script::vba::VBAEventId;
             uno::Sequence< uno::Any > aNoArgs;
             xVbaEvents->processVbaEvent( DOCUMENT_CLOSE, aNoArgs );
-        }
-
-        // Ensure that all iFormula OLE objects can be removed
-        for (const auto& formulaName : m_IFormulaNames)
-        {
-            uno::Reference< lang::XComponent > xFormulaComp = getObjectByName(GetModel(), formulaName);
-            if ( xFormulaComp.is() )
-            {
-                Reference< XModel > xFormulaModel = extractModel(xFormulaComp);
-                if ( xFormulaModel.is() )
-                {
-                    uno::Reference < beans::XPropertySet > xFormulaProps( xFormulaModel, uno::UNO_QUERY );
-                    if ( xFormulaProps.is() )
-                    {
-                        xFormulaProps->setPropertyValue("iFormulaPendingAction", uno::makeAny(OUString("delete")));
-                    }
-                }
-            }
         }
     }
     return bRet;
