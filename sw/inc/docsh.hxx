@@ -57,7 +57,7 @@ namespace svt
 {
 class EmbeddedObjectRef;
 }
-namespace com::sun::star::frame { class XController; }
+namespace com::sun::star::frame { class XController; class XModel; }
 namespace ooo::vba { class XSinkCaller; }
 namespace ooo::vba::word { class XDocument; }
 
@@ -167,6 +167,10 @@ class SW_DLLPUBLIC SwDocShell
 
     /// Next available iFormula equation number
     unsigned m_nextIFormulaNumber;
+
+    /// Master document
+    css::uno::Reference< css::frame::XModel > m_xMasterDocument;
+    bool m_masterDocumentWasLoaded; // User opened the master document before iMath required it
 
 protected:
     /// override to update text fields

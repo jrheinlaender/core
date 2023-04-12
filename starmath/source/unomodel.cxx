@@ -164,6 +164,7 @@ enum SmModelPropertyHandles
     HANDLE_PREVIOUSIFORMULA,
     HANDLE_IFORMULA_DEPENDENCY_IN,
     HANDLE_IFORMULA_DEPENDENCY_OUT,
+    HANDLE_IFORMULA_MASTERDOC,
     HANDLE_FONT_NAME_VARIABLES,
     HANDLE_FONT_NAME_FUNCTIONS,
     HANDLE_FONT_NAME_NUMBERS,
@@ -278,6 +279,7 @@ static const rtl::Reference<PropertySetInfo> & lcl_createModelPropertyInfo ()
         { OUString("PreviousIFormula")                 , HANDLE_PREVIOUSIFORMULA                   ,  cppu::UnoType<OUString>::get(),                                             PROPERTY_NONE,  0                     },
         { OUString("iFormulaDependencyIn")             , HANDLE_IFORMULA_DEPENDENCY_IN             ,  cppu::UnoType<OUString>::get(),                                             PROPERTY_NONE,  0                     },
         { OUString("iFormulaDependencyOut")            , HANDLE_IFORMULA_DEPENDENCY_OUT            ,  cppu::UnoType<OUString>::get(),                                             PROPERTY_NONE,  0                     },
+        { OUString("iFormulaMasterDocument")           , HANDLE_IFORMULA_MASTERDOC                 ,  cppu::UnoType<OUString>::get(),                                             PROPERTY_NONE,  0                     },
         { OUString("IsScaleAllBrackets")               , HANDLE_IS_SCALE_ALL_BRACKETS              ,  cppu::UnoType<bool>::get(),                                                 PROPERTY_NONE,  0                     },
         { OUString("IsTextMode")                       , HANDLE_IS_TEXT_MODE                       ,  cppu::UnoType<bool>::get(),                                                 PROPERTY_NONE,  0                     },
         { OUString("GreekCharStyle")                   , HANDLE_GREEK_CHAR_STYLE                   ,  ::cppu::UnoType<sal_Int16>::get(),                                     PROPERTY_NONE,  0                     },
@@ -482,6 +484,14 @@ void SmModel::_setPropertyValues(const PropertyMapEntry** ppEntries, const Any* 
                 *pValues >>= aDep;
                 SAL_INFO_LEVEL(3, "starmath.imath", "Setting outgoing dependencies to " << aDep);
                 pDocSh->SetIFormulaDependencyOut(aDep);
+            }
+            break;
+            case HANDLE_IFORMULA_MASTERDOC:
+            {
+                OUString aUrl;
+                *pValues >>= aUrl;
+                SAL_INFO_LEVEL(2, "starmath.imath", "Setting master document URL to " << aUrl);
+                pDocSh->SetIFormulaMasterDocument(aUrl);
             }
             break;
             case HANDLE_FONT_NAME_VARIABLES                :
@@ -777,6 +787,9 @@ void SmModel::_getPropertyValues( const PropertyMapEntry **ppEntries, Any *pValu
             break;
             case HANDLE_IFORMULA_DEPENDENCY_OUT:
                 *pValue <<= pDocSh->GetIFormulaDependencyOut();
+            break;
+            case HANDLE_IFORMULA_MASTERDOC:
+                *pValue <<= pDocSh->GetIFormulaMasterDocument();
             break;
             case HANDLE_FONT_NAME_VARIABLES                :
             case HANDLE_FONT_NAME_FUNCTIONS                :
