@@ -3854,6 +3854,9 @@
         <prop oor:name="TargetURL" oor:type="xs:string">
           <value>.uno:iMathInsertCreate</value>
         </prop>
+        <prop oor:name="Properties" oor:type="xs:int">
+            <value>1</value>
+        </prop>
       </node>
       <node oor:name=".uno:iMathInsertExternal" oor:op="replace">
         <prop oor:name="Label" oor:type="xs:string">
@@ -3878,6 +3881,9 @@
         <prop oor:name="TargetURL" oor:type="xs:string">
           <value>.uno:iMathInsertFunction</value>
         </prop>
+        <prop oor:name="Properties" oor:type="xs:int">
+          <value>1</value>
+        </prop>
       </node>
       <node oor:name=".uno:iMathInsertVector" oor:op="replace">
         <prop oor:name="Label" oor:type="xs:string">
@@ -3885,6 +3891,9 @@
         </prop>
         <prop oor:name="TargetURL" oor:type="xs:string">
           <value>.uno:iMathInsertVector</value>
+        </prop>
+        <prop oor:name="Properties" oor:type="xs:int">
+            <value>1</value>
         </prop>
       </node>
       <node oor:name=".uno:iMathInsertMatrix" oor:op="replace">
@@ -3894,6 +3903,9 @@
         <prop oor:name="TargetURL" oor:type="xs:string">
           <value>.uno:iMathInsertMatrix</value>
         </prop>
+        <prop oor:name="Properties" oor:type="xs:int">
+            <value>1</value>
+        </prop>
       </node>
       <node oor:name=".uno:iMathInsertUnit" oor:op="replace">
         <prop oor:name="Label" oor:type="xs:string">
@@ -3901,6 +3913,9 @@
         </prop>
         <prop oor:name="TargetURL" oor:type="xs:string">
           <value>.uno:iMathInsertUnit</value>
+        </prop>
+        <prop oor:name="Properties" oor:type="xs:int">
+            <value>1</value>
         </prop>
       </node>
       <node oor:name=".uno:iMathInsertChart" oor:op="replace">
@@ -3910,6 +3925,9 @@
         <prop oor:name="TargetURL" oor:type="xs:string">
           <value>.uno:iMathInsertChart</value>
         </prop>
+        <prop oor:name="Properties" oor:type="xs:int">
+            <value>1</value>
+        </prop>
       </node>
       <node oor:name=".uno:iMathInsertChartSeries" oor:op="replace">
         <prop oor:name="Label" oor:type="xs:string">
@@ -3917,6 +3935,9 @@
         </prop>
         <prop oor:name="TargetURL" oor:type="xs:string">
           <value>.uno:iMathInsertChartSeries</value>
+        </prop>
+        <prop oor:name="Properties" oor:type="xs:int">
+            <value>1</value>
         </prop>
       </node>
       <node oor:name=".uno:iMathInsertSetOptions" oor:op="replace">
@@ -3971,6 +3992,9 @@
         <prop oor:name="TargetURL" oor:type="xs:string">
           <value>.uno:iMathInsertClearEquation</value>
         </prop>
+        <prop oor:name="Properties" oor:type="xs:int">
+          <value>1</value>
+        </prop>
       </node>
       <node oor:name=".uno:iMathInsertClearAll" oor:op="replace">
         <prop oor:name="Label" oor:type="xs:string">
@@ -3978,6 +4002,9 @@
         </prop>
         <prop oor:name="TargetURL" oor:type="xs:string">
           <value>.uno:iMathInsertClearAll</value>
+        </prop>
+        <prop oor:name="Properties" oor:type="xs:int">
+          <value>1</value>
         </prop>
       </node>
       <node oor:name=".uno:iMathRenumber" oor:op="replace">
