@@ -371,6 +371,7 @@ OptionsMapping_Impl const OptionsMap_Impl[] =
     { "Writer",             "Compatibility",        RID_SW_TP_OPTCOMPATIBILITY_PAGE },
     { "Writer",             "AutoCaption",          RID_SW_TP_OPTCAPTION_PAGE },
     { "Writer",             "MailMerge",            RID_SW_TP_MAILCONFIG },
+    { "Writer",             "iMath",                RID_SW_TP_OPTIMATH_PAGE },
     { "WriterWeb",          nullptr,                SID_SW_ONLINEOPTIONS },
     { "WriterWeb",          "View",                 RID_SW_TP_HTML_CONTENT_OPT },
     { "WriterWeb",          "FormattingAids",       RID_SW_TP_HTML_OPTSHDWCRSR },
