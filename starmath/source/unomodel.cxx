@@ -457,6 +457,8 @@ void SmModel::_setPropertyValues(const PropertyMapEntry** ppEntries, const Any* 
             break;
             case HANDLE_IFORMULA_PENDING_ACTION:
             {
+                pDocSh->SetIFormulaPendingAction(""); // Clean up - must happen here - e.g. Compile() sets this to a new value
+
                 OUString bVal;
                 *pValues >>= bVal;
 
@@ -464,6 +466,8 @@ void SmModel::_setPropertyValues(const PropertyMapEntry** ppEntries, const Any* 
                      pDocSh->Compile();
                 else if (bVal.equalsAscii("delete"))
                      pDocSh->PreventFormulaClose(false);
+                else
+                    pDocSh->SetIFormulaPendingAction(bVal);
             }
             break;
             case HANDLE_PREVIOUSIFORMULA:
@@ -781,7 +785,7 @@ void SmModel::_getPropertyValues( const PropertyMapEntry **ppEntries, Any *pValu
                 *pValue <<= pDocSh->GetImText();
             break;
             case HANDLE_IFORMULA_PENDING_ACTION:
-                *pValue <<= OUString(""); // This is required because there is no PropertyAttribute::WRITEONLY
+                *pValue <<= pDocSh->GetIFormulaPendingAction();
             break;
             case HANDLE_PREVIOUSIFORMULA:
                 *pValue <<= pDocSh->GetPreviousFormula();
