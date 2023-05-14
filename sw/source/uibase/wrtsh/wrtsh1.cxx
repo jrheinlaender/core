@@ -557,7 +557,7 @@ bool SwWrtShell::InsertOleObject( const svt::EmbeddedObjectRef& xRef, SwFlyFrame
                 {
                     try
                     {
-                        xSet->setPropertyValue("Formula", uno::makeAny( aMathData ) ); // Note: Converting this to an iFormula happens in FN_IMATH_INSERT_CREATE (see textsh.cxx)
+                        xSet->setPropertyValue("Formula", uno::Any( aMathData ) ); // Note: Converting this to an iFormula happens in FN_IMATH_INSERT_CREATE (see textsh.cxx)
                         bActivate = false;
                     }
                     catch (const uno::Exception&)
