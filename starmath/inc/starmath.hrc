@@ -72,6 +72,7 @@ class SfxUInt16Item;
 #define SID_AUTO_CLOSE_BRACKETS     TypedWhichId<SfxBoolItem>(SID_SMA_START + 127)
 #define SID_SMEDITWINDOWZOOM        TypedWhichId<SfxUInt16Item>(SID_SMA_START + 129)
 #define SID_DEFAULT_SM_SYNTAX_VERSION TypedWhichId<SfxUInt16Item>(SID_SMA_START + 130)
+#define SID_DEFAULT_IM_SYNTAX_VERSION TypedWhichId<SfxUInt32Item>(SID_SMA_START + 131)
 
 #define SID_ITEXT                   (SID_SMA_START + 200)
 
