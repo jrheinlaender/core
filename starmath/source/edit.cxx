@@ -929,9 +929,9 @@ void AbstractEditTextWindow::Flush(const sal_uInt16 sid)
         pEditEngine->ClearModifyFlag();
         if (SmViewShell *pViewSh = mrEditWindow.GetView())
         {
-            std::unique_ptr<SfxStringItem> pTextToFlush = std::make_unique<SfxStringItem>(SID_TEXT, GetText());
+            std::unique_ptr<SfxStringItem> pTextToFlush = std::make_unique<SfxStringItem>(sid, GetText());
             pViewSh->GetViewFrame()->GetDispatcher()->ExecuteList(
-                    SID_TEXT, SfxCallMode::RECORD,
+                    sid, SfxCallMode::RECORD,
                     { pTextToFlush.get() });
         }
     }
