@@ -51,6 +51,7 @@
 #include "opthtml.hxx"
 #include "optinet2.hxx"
 #include "optjava.hxx"
+#include "optimath.hxx"
 #include "optjsearch.hxx"
 #include <optlingu.hxx>
 #if HAVE_FEATURE_OPENCL
@@ -301,6 +302,7 @@ static std::unique_ptr<SfxTabPage> CreateGeneralTabPage(sal_uInt16 nId, weld::Co
         case RID_SVXPAGE_LANGTOOL_OPTIONS:          fnCreate = &OptLanguageToolTabPage::Create ; break;
         case RID_SVXPAGE_DEEPL_OPTIONS:             fnCreate = &OptDeeplTabPage::Create ; break;
         case RID_SVXPAGE_OPTIONS_JAVA:              fnCreate = &SvxJavaOptionsPage::Create ; break;
+        case RID_SVXPAGE_OPTIONS_IMATH:             fnCreate = &SvxIMathOptionsPage::Create ; break;
 #if HAVE_FEATURE_OPENCL
         case RID_SVXPAGE_OPENCL:                    fnCreate = &SvxOpenCLTabPage::Create ; break;
 #endif
@@ -342,6 +344,7 @@ OptionsMapping_Impl const OptionsMap_Impl[] =
     { "ProductName",        "Java",                 RID_SVXPAGE_OPTIONS_JAVA },
     { "ProductName",        "BasicIDEOptions",      RID_SVXPAGE_BASICIDE_OPTIONS },
     { "ProductName",        "OnlineUpdate",         RID_SVXPAGE_ONLINEUPDATE },
+    { "ProductName",        "iMath",                RID_SVXPAGE_OPTIONS_IMATH },
     { "LanguageSettings",   nullptr,                SID_LANGUAGE_OPTIONS },
     { "LanguageSettings",   "Languages",            OFA_TP_LANGUAGES  },
     { "LanguageSettings",   "WritingAids",          RID_SFXPAGE_LINGU },
@@ -371,7 +374,6 @@ OptionsMapping_Impl const OptionsMap_Impl[] =
     { "Writer",             "Compatibility",        RID_SW_TP_OPTCOMPATIBILITY_PAGE },
     { "Writer",             "AutoCaption",          RID_SW_TP_OPTCAPTION_PAGE },
     { "Writer",             "MailMerge",            RID_SW_TP_MAILCONFIG },
-    { "Writer",             "iMath",                RID_SW_TP_OPTIMATH_PAGE },
     { "WriterWeb",          nullptr,                SID_SW_ONLINEOPTIONS },
     { "WriterWeb",          "View",                 RID_SW_TP_HTML_CONTENT_OPT },
     { "WriterWeb",          "FormattingAids",       RID_SW_TP_HTML_OPTSHDWCRSR },
