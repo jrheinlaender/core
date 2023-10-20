@@ -329,8 +329,6 @@ static const rtl::Reference<PropertySetInfo> & lcl_createModelPropertyInfo ()
         { OUString("ImTypeFirstLine")                  , HANDLE_IMATH_TYPEFIRSTLINE                ,  ::cppu::UnoType<OUString>::get(),                                      PropertyAttribute::READONLY,  0       },
         { OUString("ImTypeLastLine")                   , HANDLE_IMATH_TYPELASTLINE                 ,  ::cppu::UnoType<OUString>::get(),                                      PropertyAttribute::READONLY,  0       },
         { OUString("ImIsHidden")                       , HANDLE_IMATH_ISHIDDEN                     ,  ::cppu::UnoType<bool>::get(),                                          PROPERTY_NONE,  0                     },
-        { OUString("ImExpressionFirstLhs")             , HANDLE_IMATH_EXPRFIRSTLHS                 ,  ::cppu::UnoType<OUString>::get(),                                      PropertyAttribute::READONLY,  0       },
-        { OUString("ImExpressionLastLhs")              , HANDLE_IMATH_EXPRLASTLHS                  ,  ::cppu::UnoType<OUString>::get(),                                      PropertyAttribute::READONLY,  0       },
         { OUString("ImLabels")                         , HANDLE_IMATH_LABELS                       ,  ::cppu::UnoType<const Sequence < OUString >>::get(),                   PropertyAttribute::READONLY,  0       },
     };
     static const rtl::Reference<PropertySetInfo> PROPS_INFO = new PropertySetInfo ( aModelPropertyInfoMap );
@@ -1001,12 +999,6 @@ void SmModel::_getPropertyValues( const PropertyMapEntry **ppEntries, Any *pValu
                 break;
             case HANDLE_IMATH_ISHIDDEN:
                 *pValue <<= pDocSh->GetImHidden();
-                break;
-            case HANDLE_IMATH_EXPRFIRSTLHS:
-                *pValue <<= pDocSh->GetImExprFirstLhs();
-                break;
-            case HANDLE_IMATH_EXPRLASTLHS:
-                *pValue <<= pDocSh->GetImExprLastLhs();
                 break;
             case HANDLE_IMATH_LABELS:
                 *pValue <<= pDocSh->GetImLabels();
