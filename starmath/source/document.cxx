@@ -628,6 +628,8 @@ OUString SmDocShell::ImInitializeCompiler() {
     return "";
 }
 
+sal_Int64 SmDocShell::lastTempLabel = 0;
+
 void SmDocShell::Compile()
 {
     if (mImBlocked) {
