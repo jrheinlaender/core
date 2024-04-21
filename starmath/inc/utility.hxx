@@ -127,4 +127,7 @@ inline o3tl::Length SmO3tlLengthUnit()
     return comphelper::LibreOfficeKit::isActive() ? o3tl::Length::twip : o3tl::Length::mm100;
 }
 
+// Utility method for mouse click handlers in tree views with multiple columns
+bool getClickedCell(std::unique_ptr<weld::TreeView>& treeview, const MouseEvent& rMEvt, int& row, int& column, const int lastColumn);
+
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
