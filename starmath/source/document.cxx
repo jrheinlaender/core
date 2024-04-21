@@ -919,6 +919,10 @@ void SmDocShell::SetImHidden(const bool h)
 
     SAL_INFO_LEVEL(2, "starmath.imath", "Rebuilt ImText: '" << maImText << "'");
 
+const GiNaC::expression& SmDocShell::GetUnit(const OUString& unitname) const
+{
+    return mpCurrentCompiler->getUnit(STR(unitname));
+}
     if (!maImText.equals(oldImText))
     {
         if (h)
@@ -927,6 +931,11 @@ void SmDocShell::SetImHidden(const bool h)
             Compile();
     }
 
+const std::vector<std::string> SmDocShell::GetAllUnitNames() const {
+    if (mpCurrentCompiler != nullptr)
+        return mpCurrentCompiler->getUnitnames();
+
+    return {};
     mImHidden = h;
 }
 
