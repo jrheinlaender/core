@@ -237,6 +237,7 @@ ImGuiWindow::ImGuiWindow(SmCmdBoxWindow& rMyCmdBoxWin, weld::Builder& rBuilder)
     , mxNotebook(rBuilder.weld_notebook("notebook"))
     , mxFormulaList(rBuilder.weld_tree_view("iformulalist"))
     , mpOptionsDialog(nullptr)
+    , mpLabelDialog(nullptr)
     , lastOptionsPage(0)
     , mNumClicks(0)
     , mClickedColumn(-1)
@@ -256,6 +257,7 @@ ImGuiWindow::ImGuiWindow(SmCmdBoxWindow& rMyCmdBoxWin, weld::Builder& rBuilder)
     ResetModel();
 
     mxFormulaList->columns_autosize();
+}
 
 ImGuiWindow::~ImGuiWindow() COVERITY_NOEXCEPT_FALSE
 {
@@ -295,6 +297,11 @@ void ImGuiWindow::ResetModel()
     SmDocShell* pDoc = GetDoc();
     if (!pDoc) return;
 
+    // Freeze these dialogs TODO Is a mutex required here?
+    if (mpOptionsDialog != nullptr)
+        mpOptionsDialog->setFormulaLinePointer(nullptr);
+    if (mpLabelDialog != nullptr)
+        mpLabelDialog->setFormulaLinePointer(nullptr);
     int lineCount = 0;
         typeid(iFormulaNodeEq), typeid(iFormulaNodeEx), typeid(iFormulaNodeConst), typeid(iFormulaNodeFuncdef),
         typeid(iFormulaNodeVectordef), typeid(iFormulaNodeMatrixdef), typeid(iFormulaNodeExplainval), typeid(iFormulaNodePrintval)
@@ -393,6 +400,9 @@ void ImGuiWindow::ResetModel()
 
     if (mpOptionsDialog != nullptr)
         mpOptionsDialog->setFormulaLinePointer(GetSelectedLine());
+    if (mpLabelDialog != nullptr)
+        mpLabelDialog->setFormulaLinePointer(GetSelectedLine());
+}
 }
 
 // Note: This will detect the column where the mouse was pressed
@@ -501,6 +511,13 @@ IMPL_LINK(ImGuiWindow, MousePressHdl, const MouseEvent&, rMEvt, bool)
                 mpOptionsDialog->getDialog()->window_move(parentPos.X() + parentSize.Width()/2 - dialogSize.Width()/2, parentPos.Y() + parentSize.Height() - dialogSize.Height());
                 mpOptionsDialog->run();
                 mpOptionsDialog = nullptr;
+            }
+            else if (typeid(*pLine) == typeid(iFormulaNodeStmDelete))
+            {
+                mpLabelDialog = std::make_unique<ImGuiLabelDialog>(GetFrameWeld(), this, pLine);
+                positionImGuiDialog(mpLabelDialog->getDialog(), GetFrameWeld());
+                mpLabelDialog->run();
+                mpLabelDialog = nullptr;
             }
             else
                 SAL_INFO_LEVEL(1, "starmath.imath", "... but column " << mClickedColumn << " is not sensitive");
